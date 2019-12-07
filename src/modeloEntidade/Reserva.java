@@ -8,7 +8,7 @@ package modeloEntidade;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-import sun.java2d.pipe.SpanShapeRenderer;
+import model.Exeptions.DomainExeption;
 
 /**
  *
@@ -23,6 +23,10 @@ public class Reserva {
     private static SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy");
 
     public Reserva(Integer roomnamber, Date checkIn, Date checkOut) {
+        if (!checkOut.after(checkIn)){
+            
+            throw new DomainExeption("Data Invalida");
+            }
         this.roomnamber = roomnamber;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
@@ -51,20 +55,20 @@ public class Reserva {
         
     }
     
-    public String updateDates(Date checkIn, Date checkOut ){
+    public void updateDates(Date checkIn, Date checkOut ){
         Date now = new Date();
             
             if (checkIn.before(now)|| checkOut.before(now)){
-                return "Erro na reserva data de atualização deve ser datas futuras ";
+                throw new DomainExeption("a reserva data de atualização deve ser datas futuras ");
             }
            if (!checkOut.after(checkIn)){
             
-            return "Data Invalida";
+            throw new DomainExeption("Data Invalida");
             }
                
         this.checkIn = checkIn;
         this.checkOut = checkOut;
-        return null;
+        
     }
     @Override
     public String toString(){
