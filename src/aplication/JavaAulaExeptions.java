@@ -25,7 +25,7 @@ public class JavaAulaExeptions {
         
         if (!checkOut.after(checkIn)){
             
-            System.out.println("Data Invalida");
+            System.err.println("Data Invalida");
             
         }
         else {
@@ -41,8 +41,17 @@ public class JavaAulaExeptions {
             System.out.print("Check-Out Date (dd/MM/yyyy ): ");
             checkOut = sdf.parse(sc.next());
             
-            reserva.updateDates(checkIn, checkOut);
+            
+            
+            String error = reserva.updateDates(checkIn, checkOut);
+            if (error != null){
+                
+                System.out.println("Error reserva " + error);
+            }
+            else{
             System.out.println("Reserva "+reserva);
+            }
+            
         }
         
         sc.close();
